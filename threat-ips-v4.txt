@@ -3,4 +3,6 @@
 # Automatisch gepflegt. Fehleintrag? Issue oeffnen, IP fliegt raus.
 # Fehleintrag? Issue oeffnen, IP fliegt raus + in die Allowlist.
 
+
 77.239.124.47
+138.68.53.50
