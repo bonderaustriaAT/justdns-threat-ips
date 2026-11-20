@@ -2,3 +2,5 @@
 # Eine IPv4 pro Zeile. '#' = Kommentar. KEINE Domains, KEIN DNS.
 # Automatisch gespeist aus cowrie.login.failed, gefiltert per tools/publish.py.
 # Fehleintrag? Issue oeffnen, IP fliegt raus + in die Allowlist.
+
+77.239.124.47
