@@ -4,7 +4,9 @@
 # Fehleintrag? Issue oeffnen, IP fliegt raus + in die Allowlist.
 
 1.1.220.166
+1.234.53.65
 5.252.96.184
+14.103.48.34
 41.142.40.70
 49.13.49.235
 49.48.147.137
