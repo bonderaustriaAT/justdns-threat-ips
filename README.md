@@ -72,12 +72,6 @@ Je nach UniFi-Version zwei Wege:
 - **CyberSecure / Custom Threat Feed:** falls lizenziert, unter den
   Threat-Management-Feeds die raw-URL als eigenen Feed hinterlegen.
 
-Nach dem Umstellen auf die raw-URL die erkannte Anzahl prüfen: es sollten die
-vollen ~2900 Einträge sein, nicht 3. Kommen deutlich weniger als die volle
-Anzahl durch, greift das **Entry-Limit** der UniFi-Firewall-Gruppe (modell- und
-versionsabhängig, auf UDM meist einige Tausend bis ~10000) - dann ist nicht die
-Liste das Problem, sondern die Obergrenze der Gruppe.
-
 ## Lizenz
 
 CC0 / Public Domain.
