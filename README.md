@@ -32,7 +32,21 @@ Liste; im Zweifel fliegt eine IP raus.
 
 ## Nutzung (Firewall, nicht DNS)
 
-Beispiel mit `ipset` + `iptables` auf einem Linux-Gateway:
+### Richtige URL: raw, nicht blob
+
+Immer die **raw-URL** einbinden, nie die GitHub-Weboberfläche:
+
+```
+https://raw.githubusercontent.com/bonderaustriaAT/justdns-threat-ips/main/threat-ips-v4.txt
+```
+
+Die blob-URL (`https://github.com/.../blob/main/threat-ips-v4.txt`) liefert eine
+HTML-Seite, keinen Klartext. Ein Fetcher, der sie lädt, findet darin nur ein
+paar zufällige IP-artige Strings statt der ganzen Liste (typisches Symptom:
+"erkennt nur 3 Einträge"). In der GitHub-Ansicht auf **Raw** klicken und die dann
+angezeigte URL verwenden, sie beginnt mit `raw.githubusercontent.com`.
+
+### ipset + iptables (Linux-Gateway)
 
 ```sh
 ipset create justdns-threat hash:ip -exist
@@ -41,6 +55,28 @@ curl -fsSL https://raw.githubusercontent.com/bonderaustriaAT/justdns-threat-ips/
   | while read ip; do ipset add justdns-threat "$ip" -exist; done
 iptables -I INPUT -m set --match-set justdns-threat src -j DROP
 ```
+
+### UniFi (UDM / UDM Pro / Cloud Gateway)
+
+UniFi kann die Liste als externe IP-Quelle ziehen. Überall, wo nach einer
+URL/Link zur Liste gefragt wird, die **raw-URL** von oben eintragen, nicht die
+blob-URL. Die Liste ist bereits UniFi-tauglich: eine IPv4 pro Zeile, `#`-Zeilen
+sind Kommentare und werden ignoriert, keine CIDR-Blöcke.
+
+Je nach UniFi-Version zwei Wege:
+
+- **Firewall-Gruppe (Port/IP Group) per URL:** Settings > Security (bzw.
+  Firewall & Security) > eine IP-Gruppe anlegen und als Quelle die raw-URL
+  eintragen. UniFi holt und parst die Zeilen selbst. Die Gruppe dann in einer
+  Firewall-/Traffic-Regel als Quelle auf DROP/Block setzen (Richtung WAN IN).
+- **CyberSecure / Custom Threat Feed:** falls lizenziert, unter den
+  Threat-Management-Feeds die raw-URL als eigenen Feed hinterlegen.
+
+Nach dem Umstellen auf die raw-URL die erkannte Anzahl prüfen: es sollten die
+vollen ~2900 Einträge sein, nicht 3. Kommen deutlich weniger als die volle
+Anzahl durch, greift das **Entry-Limit** der UniFi-Firewall-Gruppe (modell- und
+versionsabhängig, auf UDM meist einige Tausend bis ~10000) - dann ist nicht die
+Liste das Problem, sondern die Obergrenze der Gruppe.
 
 ## Lizenz
 
